@@ -7,11 +7,13 @@ install:
   
 services:
   - mysql
-  
+ 
+sudo: true
+
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS ponto_inteligente;'
-  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('root') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-  - sudo mysql_upgrade -u root -p root
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - sudo mysql_upgrade -u root
   - sudo service mysql restart
   
 addons:
