@@ -11,6 +11,7 @@ public interface EmpresaService {
     
     /**
      * Retorna uma empresa dado um cnpj
+     * 
      * @param cnpj
      * @return Optional<Empresa>
      */
