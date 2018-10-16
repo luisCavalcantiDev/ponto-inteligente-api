@@ -29,6 +29,7 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "funcionario")
+@SuppressWarnings("PersistenceUnitPresent")
 public class Funcionario implements Serializable {
 
     private static final long serialVersionUID = -2632296716387350406L;

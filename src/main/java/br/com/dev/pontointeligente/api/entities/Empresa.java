@@ -22,6 +22,7 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name = "empresa")
+@SuppressWarnings("PersistenceUnitPresent")
 public class Empresa implements Serializable {
 
     private static final long serialVersionUID = -3666539947301579619L;

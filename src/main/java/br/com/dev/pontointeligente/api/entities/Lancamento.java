@@ -23,6 +23,7 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name = "lancamento")
+@SuppressWarnings("PersistenceUnitPresent")
 public class Lancamento implements Serializable {
 
     private Long _id;
