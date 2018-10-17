@@ -1,6 +1,6 @@
 package br.com.dev.pontointeligente.api.controllers;
 
-import br.com.dev.pontointeligente.api.dtos.PessoaJuridicaDto;
+import br.com.dev.pontointeligente.api.dtos.PessoaFisicaDto;
 import br.com.dev.pontointeligente.api.entities.Empresa;
 import br.com.dev.pontointeligente.api.entities.Funcionario;
 import br.com.dev.pontointeligente.api.services.EmpresaService;
@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class PessoaJuridicaControllerTest {
+public class PessoaFisicaControllerTest {
 
     @Autowired
     private MockMvc _mvc;
@@ -43,18 +43,19 @@ public class PessoaJuridicaControllerTest {
     @MockBean
     private FuncionarioService _funcionarioService;
 
-    private static final String _CADASTRAR_PJ_URL = "/api/cadastro/pj";
+    private static final String _CADASTRAR_PF_URL = "/api/cadastro/pf";
     private static final Long _ID = Long.valueOf(1);
-    private static final String _NOME = "Funcionario 1";
+    private static final String _NOME = "Funcionario 2";
     private static final String _EMAIL = "email@email.com";
-    private static final String _SENHA = "123456";
-    private static final String _CPF = "56249244026";
-    private static final String _RAZAO_SOCIAL = "Empresa XYZ";
-    private static final String _CNPJ = "66387844000145";
+    private static final String _SENHA = "654321";
+    private static final String _CPF = "71512956180";
+    private static final Optional<String> _QTD_HORAS_ALMOCO = Optional.of("1");
+    private static final Optional<String> _QTD_HORAS_TRABALHO_DIA = Optional.of("8");
+    private static final Optional<String> _VALOR_HORA = Optional.of("30");
 
-    public PessoaJuridicaControllerTest() {
+    public PessoaFisicaControllerTest() {
     }
-    
+
     @Before
     public void setUp() throws Exception {
 	BDDMockito.given(this._empresaService.persistir(Mockito.any(Empresa.class))).willReturn(new Empresa());
@@ -70,38 +71,37 @@ public class PessoaJuridicaControllerTest {
     }
 
     @Test
-    public void testCadastrarInValido() throws Exception {	
-	PessoaJuridicaDto _cadastro = this.obterDadosDto();
+    public void testCadastrarInvalido() throws Exception {
+
+	PessoaFisicaDto _cadastro = this.obterDadosDto();
 	String _content = this.converterDtoParaStringJson(_cadastro);
 
-	_mvc.perform(MockMvcRequestBuilders.post(_CADASTRAR_PJ_URL)
+	_mvc.perform(MockMvcRequestBuilders.post(_CADASTRAR_PF_URL)
 		.content(_content)
 		.contentType(MediaType.APPLICATION_JSON))
 		.andExpect(status().isBadRequest());
 
     }
 
-    @Test
-    public void testCadastrarInvalido() throws Exception {
-    }
-
-    private PessoaJuridicaDto obterDadosDto() {
-	PessoaJuridicaDto _cadastro = new PessoaJuridicaDto();
+    private PessoaFisicaDto obterDadosDto() {
+	PessoaFisicaDto _cadastro = new PessoaFisicaDto();
 	_cadastro.setId(_ID);
 	_cadastro.setNome(_NOME);
 	_cadastro.setEmail(_EMAIL);
 	_cadastro.setSenha(_SENHA);
 	_cadastro.setCpf(_CPF);
-	_cadastro.setRazaoSocial(_RAZAO_SOCIAL);
-	_cadastro.setCnpj(_CNPJ);
+	_cadastro.setQtdHorasAlmoco(_QTD_HORAS_ALMOCO);
+	_cadastro.setQtdHorasTrabalhoDia(_QTD_HORAS_TRABALHO_DIA);
+	_cadastro.setValorHora(_VALOR_HORA);
 
 	return _cadastro;
     }
 
-    private String converterDtoParaStringJson(PessoaJuridicaDto cadastro) {
+    private String converterDtoParaStringJson(PessoaFisicaDto cadastro) {
 	Gson _gson = new Gson();
 	String _json = _gson.toJson(cadastro);
 
 	return _json;
     }
+
 }
